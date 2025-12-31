@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bonne Année 2026 ✨</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  scroll-behavior:smooth;
+}
+
+html,body{
+  width:100%;
+  overflow-x:hidden;
+  background:#000;
+  color:#fff;
+  font-family:Arial,sans-serif;
+}
+
+/* ================= INTRO ================= */
+#intro{
+  position:fixed;
+  inset:0;
+  background:#020617;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:100;
+}
+
+#startBtn{
+  font-size:6.5vw;          /* 👈 réduit */
+  max-font-size:60px;
+  padding:32px 45px;
+  border-radius:90px;
+  border:none;
+  color:white;
+  background:linear-gradient(135deg,#020024,#090979,#00d4ff);
+  box-shadow:0 0 30px rgba(0,170,255,.8);
+  animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+  0%{box-shadow:0 0 20px #00f}
+  50%{box-shadow:0 0 45px #0ff}
+  100%{box-shadow:0 0 20px #00f}
+}
+
+/* ================= FIREWORKS ================= */
+canvas{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:50;
+}
+
+/* ================= CONTENT ================= */
+#content{display:none}
+
+/* ================= VIDEO ================= */
+.videoBox{
+  position:relative;
+}
+
+video{
+  width:100%;
+  height:100vh;
+  object-fit:cover;
+}
+
+#skipBtn{
+  position:absolute;
+  bottom:12%;
+  left:50%;
+  transform:translateX(-50%);
+  padding:16px 38px;
+  font-size:5vw;
+  max-font-size:24px;
+  border-radius:50px;
+  border:none;
+  background:white;
+  color:black;
+  font-weight:bold;
+  z-index:10;
+}
+
+/* ================= MESSAGE ================= */
+#message{
+  width:100%;
+  text-align:center;
+  margin:40px 0;
+}
+
+.textLine{
+  width:90%;
+  margin:14px auto;
+  padding:14px;
+  font-size:9vw;
+  max-font-size:90px;
+  font-weight:bold;
+  border-radius:18px;
+  background:linear-gradient(90deg,#b8860b,#ffd700,#fff);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+#nameBox{
+  height:12vw;
+  max-height:80px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  font-size:8vw;
+  max-font-size:70px;
+  font-weight:bold;
+  border-radius:16px;
+  transition:transform .3s ease;
+}
+
+#bonne{
+  font-size:14vw;
+  max-font-size:120px;
+  font-family:cursive;
+  font-weight:bold;
+  color:gold;
+  margin-top:10px;
+  animation:shine 1.5s infinite;
+}
+
+@keyframes shine{
+  0%{text-shadow:0 0 10px gold}
+  50%{text-shadow:0 0 35px gold}
+  100%{text-shadow:0 0 10px gold}
+}
+
+/* ================= GALLERY ================= */
+#gallery{
+  width:100%;
+  padding:20px;
+}
+
+#gallery img{
+  width:100%;
+  border-radius:25px;
+  animation:borderAnim 1.2s infinite alternate;
+}
+
+@keyframes borderAnim{
+  from{box-shadow:0 0 15px gold}
+  to{box-shadow:0 0 35px magenta}
+}
+
+/* ================= FINAL ================= */
+#final{
+  text-align:center;
+  margin:50px 0;
+}
+
+#playFinal{
+  padding:18px 45px;
+  font-size:5vw;
+  max-font-size:26px;
+  border-radius:50px;
+  border:none;
+  background:white;
+  color:black;
+  font-weight:bold;
+}
+
+#finalMsg{
+  margin-top:25px;
+  font-size:9vw;
+  max-font-size:80px;
+  font-weight:bold;
+  display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div id="intro">
+  <button id="startBtn">✨ CLIQUE ICI ✨</button>
+</div>
+
+<canvas id="fireworks"></canvas>
+<audio id="music" src="music.mp3" loop></audio>
+
+<div id="content">
+
+  <div class="videoBox">
+    <video id="video1" src="video_intro.mp4"></video>
+    <a href="#message">
+      <button id="skipBtn">👉🏽 Passer la vidéo</button>
+    </a>
+  </div>
+
+  <section id="message">
+    <div id="nameBox">Jayson</div>
+    <div class="textLine">Vous souhaite</div>
+    <div class="textLine">Une Bonne Année</div>
+    <div id="bonne">2026 ✨</div>
+  </section>
+
+  <section id="gallery">
+    <img id="imgShow" src="img1.jpg">
+  </section>
+
+  <section id="final">
+    <a href="#video2">
+      <button id="playFinal">👉🏽 Lire la vidéo</button>
+    </a>
+    <video id="video2" src="video_finale.mp4"></video>
+    <div id="finalMsg">Merci de votre confiance 💙</div>
+  </section>
+
+</div>
+
+<script>
+/* ========= ELEMENTS ========= */
+const intro = document.getElementById("intro");
+const startBtn = document.getElementById("startBtn");
+const content = document.getElementById("content");
+const music = document.getElementById("music");
+const video1 = document.getElementById("video1");
+const video2 = document.getElementById("video2");
+const nameBox = document.getElementById("nameBox");
+const imgShow = document.getElementById("imgShow");
+const finalMsg = document.getElementById("finalMsg");
+
+/* ========= FIREWORKS ========= */
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+function fireworks(){
+  let parts=[];
+  for(let i=0;i<120;i++){
+    parts.push({
+      x:canvas.width/2,
+      y:canvas.height/2,
+      r:Math.random()*3+2,
+      dx:(Math.random()-0.5)*8,
+      dy:(Math.random()-0.5)*8,
+      life:60,
+      c:`hsl(${Math.random()*360},100%,60%)`
+    });
+  }
+  function anim(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    parts.forEach(p=>{
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.c;
+      ctx.fill();
+      p.x+=p.dx;
+      p.y+=p.dy;
+      p.life--;
+    });
+    parts=parts.filter(p=>p.life>0);
+    if(parts.length) requestAnimationFrame(anim);
+  }
+  anim();
+}
+
+/* ========= START ========= */
+startBtn.onclick=()=>{
+  fireworks();
+  setTimeout(()=>{
+    intro.style.display="none";
+    content.style.display="block";
+    video1.play();
+  },1200);
+};
+
+/* ========= MUSIC ========= */
+video1.onended=()=>music.play();
+
+/* ========= NAMES ========= */
+const names=[
+ {t:"Jayson",c:"#e3f2fd"},
+ {t:"Mr NDE",c:"#fce4ec"},
+ {t:"Jax",c:"#e8f5e9"},
+ {t:"Mr Jayson",c:"#fff3e0"},
+ {t:"Tonton Jayson",c:"#ede7f6"},
+ {t:"⁷Jay</Dev>",c:"#e0f2f1"},
+ {t:"Jay-Jay",c:"#f3e5f5"},
+ {t:"MCE Jayson",c:"#e1f5fe"},
+ {t:"Jay-Zee",c:"#f9fbe7"},
+ {t:"Jayson#07",c:"#fffde7"},
+ {t:"Mr. ZACHARIE",c:"#fbe9e7"},
+ {t:"Big-Jay",c:"#e8eaf6"},
+ {t:"BIG-J",c:"#e0f7fa"},
+ {t:"Le chargé des Projets",c:"#f1f8e9"},
+ {t:"Mr. Jay",c:"#ede7f6"},
+ {t:"Jayson__Miles",c:"#e3f2fd"},
+ {t:"Chef Projet",c:"#fff8e1"},
+ {t:"Le «7»",c:"#fce4ec"}
+];
+
+let i=0;
+setInterval(()=>{
+  nameBox.style.transform="translateY(-100%)";
+  setTimeout(()=>{
+    nameBox.innerText=names[i].t;
+    nameBox.style.background=names[i].c;
+    nameBox.style.color="#000";
+    nameBox.style.transform="translateY(0)";
+    i=(i+1)%names.length;
+  },300);
+},900);
+
+/* ========= GALLERY ========= */
+let img=1;
+setInterval(()=>{
+  img=img%10+1;
+  imgShow.src="img"+img+".jpg";
+},700);
+
+/* ========= FINAL ========= */
+document.getElementById("playFinal").onclick=()=>{
+  music.pause();
+  video2.play();
+  finalMsg.style.display="none";
+  video2.onended=()=>{
+    finalMsg.style.display="block";
+    music.play();
+  };
+};
+</script>
+
+</body>
+</html>
